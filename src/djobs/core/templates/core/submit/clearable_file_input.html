@@ -1,0 +1,14 @@
+{% load i18n %}
+{% if widget.is_initial %}{{ widget.initial_text }}: <a href="{{ widget.value.url }}">{{ widget.value }}</a>{% if not widget.required %}
+<input type="checkbox" class="filled-in" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}" />
+<label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>{% endif %}<br />
+{{ widget.input_text }}:{% endif %}
+<div class="file-field input-field">
+    <div class="btn">
+        <span>{% trans "Choose file" %}</span>
+        <input type="{{ widget.type }}" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} />
+    </div>
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+    </div>
+</div>

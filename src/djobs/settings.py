@@ -80,6 +80,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 # Application definition
 
 INSTALLED_APPS = [
+    'djobs.core',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,7 +88,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'compressor',
-    'djobs.core',
 ]
 
 MIDDLEWARE = [

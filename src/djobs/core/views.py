@@ -1,11 +1,16 @@
 from django import forms
 from django.contrib import messages
+from django.forms import ClearableFileInput
 from django.shortcuts import redirect
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView
 
 from djobs.core.models import AccessCode, JobOpening
+
+
+class CustomFileInput(ClearableFileInput):
+    template_name = 'core/submit/clearable_file_input.html'
 
 
 class JobOpeningForm(forms.ModelForm):
@@ -36,6 +41,7 @@ class JobOpeningForm(forms.ModelForm):
             'company_contact': forms.Textarea(
                 attrs={'class': 'materialize-textarea'}
             ),
+            'logo': CustomFileInput,
         }
 
 
@@ -61,6 +67,7 @@ class SubmitView(TemplateView):
     def form(self):
         return JobOpeningForm(
             data=self.request.POST if self.request.method == "POST" else None,
+            files=self.request.FILES if self.request.method == "POST" else None,
             instance=self.opening
         )
 
@@ -72,7 +79,8 @@ class SubmitView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
-        ctx['form'] = self.form
+        if self.code:
+            ctx['form'] = self.form
         return ctx
 
     def post(self, request, *args, **kwargs):

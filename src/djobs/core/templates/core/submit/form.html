@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col m3">&nbsp;</div>
             <div class="col m6">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% if form.errors %}
                     {% for field in form %}
@@ -53,15 +53,8 @@
                             {% include "core/submit/fragment_field.html" with field=form.company_description %}
                             {% include "core/submit/fragment_field.html" with field=form.company_contact %}
 
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    <span>Select logo</span>
-                                    {{ form.logo }}
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
-                                </div>
-                            </div>
+                            <label>Logo</label><br>
+                            {{ form.logo }}
                         </div>
                     </div>
                     <div class="card">
