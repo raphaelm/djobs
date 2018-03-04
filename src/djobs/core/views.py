@@ -4,7 +4,7 @@ from django.forms import ClearableFileInput
 from django.shortcuts import redirect
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 
 from djobs.core.models import AccessCode, JobOpening
 
@@ -97,3 +97,21 @@ class SubmitView(TemplateView):
                 messages.error(request, _('The access code you inserted was not found in our database. Please contact '
                                           'us if you think this is an error!'))
         return super().get(request, *args, **kwargs)
+
+
+class JobDetailView(DetailView):
+    model = JobOpening
+    context_object_name = 'job'
+    template_name = 'core/detail.html'
+
+    def get_queryset(self):
+        return JobOpening.objects.filter(active=True, public=True).order_by('company_name')
+
+
+class JobListView(ListView):
+    model = JobOpening
+    context_object_name = 'jobs'
+    template_name = 'core/list.html'
+
+    def get_queryset(self):
+        return JobOpening.objects.filter(active=True, public=True).order_by('company_name')

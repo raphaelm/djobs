@@ -6,3 +6,13 @@
 .input-field label.active {
   left: 0;
 }
+.card .card-image {
+  padding-top: 10px;
+}
+.card .card-image img {
+  max-height: 100px;
+  max-width: 100%;
+  width: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}

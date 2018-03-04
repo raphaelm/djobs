@@ -1,0 +1,43 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="section no-pad-bot">
+    <div class="container">
+        <p>
+            {% blocktrans trimmed %}
+            Welcome to our conference job board! Sponsors of DjangoCon Europe and buyers of the Business Supporter
+            ticket have the option to promote their current job openings here.
+            {% endblocktrans %}
+        </p>
+        <p>
+            <strong>
+                {% blocktrans trimmed %}
+                Not all job offers are shown online, there are some offers posted exclusively to the physical job board
+                at the conference, so make sure to check it out!
+                {% endblocktrans %}
+            </strong>
+        </p>
+        <div class="row">
+            {% for job in jobs %}
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                            {{ job.job_title }}
+                        </span>
+                        <p>
+                            <strong>{% trans "Company:" %}</strong> {{ job.company_name }}<br>
+                            <strong>{% trans "Location:" %}</strong> {{ job.job_location }}<br>
+                            <strong>{% trans "Remote:" %}</strong> {% if job.job_remote %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}
+                        </p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{% url 'job.detail' pk=job.pk %}">Read more</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
