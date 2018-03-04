@@ -1,6 +1,7 @@
 import os
 import sys
 
+from django.contrib import messages
 from django.utils.crypto import get_random_string
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,6 +86,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compressor',
     'djobs.core',
 ]
 
@@ -117,6 +119,36 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djobs.wsgi.application'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'djobs/static')
+]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+)
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+)
+
+COMPRESS_ENABLED = COMPRESS_OFFLINE = not debug_default
+
+COMPRESS_CSS_FILTERS = (
+    'compressor.filters.cssmin.CSSCompressorFilter',
+)
+
+MESSAGE_TAGS = {
+    messages.INFO: 'blue',
+    messages.ERROR: 'red',
+    messages.WARNING: 'orange',
+    messages.SUCCESS: 'green',
+}
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

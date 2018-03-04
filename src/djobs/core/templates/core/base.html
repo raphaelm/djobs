@@ -1,0 +1,54 @@
+{% load compress %}
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>djobs</title>
+    <meta name="viewport" content="width=device-width">
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'core/main.scss' %}">
+    {% endcompress %}
+</head>
+<body>
+
+<nav class="lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" class="brand-logo">DjangoCon Europe Job Board</a>
+    </div>
+</nav>
+{% if messages %}
+{% for message in messages %}
+<div class="container">
+    <div class="card {{ message.tags}} darken-1">
+        <div class="card-content white-text">
+            <p>
+                {{ message|linebreaksbr }}
+            </p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% block content %}
+{% endblock %}
+
+<footer class="page-footer orange">
+    <div class="container white-text">
+        You want your job offers to appear here? It's never to late to
+        <a href="https://2018.djangocon.eu/sponsoring/" class="white-text">sponsor DjangoCon Europe!</a>
+        <br>&nbsp;
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            &copy; ROSE e.V.
+            &middot; <a href="mailto:2018@djangocon.eu" class="white-text">Contact us</a>
+            &middot; <a href="https://2018.djangocon.eu/imprint/" class="white-text">Imprint</a>
+        </div>
+    </div>
+</footer>
+{% compress js %}
+<script type="text/javascript" src="{% static 'jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'materialize/materialize.js' %}"></script>
+{% endcompress %}
+</body>
+</html>

@@ -1,0 +1,87 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="section no-pad-bot">
+    <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">Create or modify job posting</h1>
+        <div class="row">
+            <div class="col m3">&nbsp;</div>
+            <div class="col m6">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="container">
+                        <div class="card red darken-1">
+                            <div class="card-content white-text">
+                                <p>
+                                    {{ error|escape }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="container">
+                        <div class="card red darken-1">
+                            <div class="card-content white-text">
+                                <p>
+                                    {{ error|escape }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Job information</span>
+                            {% include "core/submit/fragment_field.html" with field=form.job_title %}
+                            {% include "core/submit/fragment_field.html" with field=form.job_description %}
+                            {% include "core/submit/fragment_field.html" with field=form.job_salary_range %}
+                            {% include "core/submit/fragment_field.html" with field=form.job_location %}
+                            {% include "core/submit/fragment_field.html" with field=form.job_remote %}
+                            <br>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Company information</span>
+                            {% include "core/submit/fragment_field.html" with field=form.company_name %}
+                            {% include "core/submit/fragment_field.html" with field=form.company_description %}
+                            {% include "core/submit/fragment_field.html" with field=form.company_contact %}
+
+                            <div class="file-field input-field">
+                                <div class="btn">
+                                    <span>Select logo</span>
+                                    {{ form.logo }}
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title">Settings</span>
+                            {% include "core/submit/fragment_field.html" with field=form.public %}
+                            {% include "core/submit/fragment_field.html" with field=form.print_card %}
+                            <br>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <button type="submit"
+                                class="waves-effect waves-light orange btn-large btn-block">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</div>
+{% endblock %}

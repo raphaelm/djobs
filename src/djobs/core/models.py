@@ -79,3 +79,6 @@ class JobOpening(models.Model):
         blank=True,
         verbose_name=_('Company logo')
     )
+
+    def __str__(self):
+        return '{} at {}'.format(self.job_title, self.company_name)

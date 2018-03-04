@@ -1,0 +1,31 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="section no-pad-bot">
+    <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">Welcome to our job board!</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">
+                To submit a job or change a submission you need a value access code:
+            </h5>
+        </div>
+        <form class="row" action="" method="get">
+            <div class="col m3">&nbsp;</div>
+            <div class="col m6 center">
+                <div class="input-field">
+                    <input id="code" type="text" name="code" autofocus>
+                    <label for="code">Access code</label>
+                </div>
+                <br>
+                <button type="submit"
+                        class="waves-effect waves-light orange btn-large btn-block">
+                    Get Started
+                </button>
+            </div>
+        </form>
+        <div class="row center">
+        </div>
+        <br><br>
+    </div>
+</div>
+{% endblock %}
