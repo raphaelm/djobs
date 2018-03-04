@@ -27,7 +27,7 @@ class JobOpening(models.Model):
     )
     public = models.BooleanField(
         default=False,
-        verbose_name=_('This job posting should be shown online'),
+        verbose_name=_('This job posting should be shown publicly online'),
         help_text=_('If you set this option, we will publish the job posting both on our website and on a printed '
                     'card at the conference venue. If you do not set it, we will only show it on a printed card '
                     'at the conference venue, but not online.')
