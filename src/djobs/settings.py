@@ -62,6 +62,7 @@ SITE_URL = os.getenv('DJOBS_SITE_URL', 'http://localhost')
 if SITE_URL == 'http://localhost':
     ALLOWED_HOSTS = ['*']
 else:
+    from urllib.parse import urlparse
     ALLOWED_HOSTS = [urlparse(SITE_URL).netloc]
 
 if os.getenv('DJOBS_COOKIE_DOMAIN', ''):
