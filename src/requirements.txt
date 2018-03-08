@@ -2,3 +2,5 @@ Django==2.0.*
 pillow
 django-compressor
 django-libsass
+csscompressor
+
