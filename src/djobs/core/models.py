@@ -57,7 +57,9 @@ class JobOpening(models.Model):
         verbose_name=_('Salary range (optional)')
     )
     job_description = models.TextField(
-        verbose_name=_('Job description')
+        verbose_name=_('Job description'),
+        help_text=_('If we will print the card for the physical job board, please check the preview after saving to '
+                    'make sure the text is not too long.')
     )
 
     company_name = models.CharField(
@@ -67,6 +69,8 @@ class JobOpening(models.Model):
     company_description = models.TextField(
         blank=True,
         verbose_name=_('Company description'),
+        help_text=_('If we will print the card for the physical job board, please check the preview after saving to '
+                    'make sure the text is not too long.')
     )
     company_contact = models.TextField(
         verbose_name=_('Contact information'),

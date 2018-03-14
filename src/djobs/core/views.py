@@ -1,12 +1,14 @@
 from django import forms
 from django.contrib import messages
 from django.forms import ClearableFileInput
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, ListView, DetailView
 
 from djobs.core.models import AccessCode, JobOpening
+from djobs.core.pdf import PDFGenerator
 
 
 class CustomFileInput(ClearableFileInput):
@@ -97,6 +99,36 @@ class SubmitView(TemplateView):
                 messages.error(request, _('The access code you inserted was not found in our database. Please contact '
                                           'us if you think this is an error!'))
         return super().get(request, *args, **kwargs)
+
+
+class PrintPreView(TemplateView):
+
+    @cached_property
+    def code(self):
+        try:
+            return AccessCode.objects.get(
+                code=self.request.GET.get('code')
+            )
+        except AccessCode.DoesNotExist:
+            return
+
+    @cached_property
+    def opening(self):
+        try:
+            return self.code.job
+        except JobOpening.DoesNotExist:
+            return JobOpening(access_code=self.code)
+
+    def get(self, request, *args, **kwargs):
+        if not self.code:
+            messages.error(request, _('The access code you inserted was not found in our database. Please contact '
+                                      'us if you think this is an error!'))
+
+        data = PDFGenerator(self.opening).create_pdf()
+        resp = HttpResponse(data)
+        resp['Content-Type'] = 'application/pdf'
+        resp['Content-Disposition'] = 'inline; filename="preview.pdf"'
+        return resp
 
 
 class JobDetailView(DetailView):

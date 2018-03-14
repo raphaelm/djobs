@@ -3,4 +3,5 @@ pillow
 django-compressor
 django-libsass
 csscompressor
-
+reportlab
+PyPDF2
