@@ -6,6 +6,14 @@
         <h1 class="header center orange-text">Create or modify job posting</h1>
         <div class="row">
             <div class="col l6 m12 offset-l3">
+                {% if opening.pk %}
+                <p class="center">
+                    <a href="{% url 'job.preview' %}?code={{ request.GET.code }}" target="_blank"
+                       class="waves-effect waves-light grey btn-large btn-block">
+                        Preview printed version
+                    </a>
+                </p>
+                {% endif %}
                 <form action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% if form.errors %}
@@ -62,6 +70,11 @@
                             {% include "core/submit/fragment_field.html" with field=form.public %}
                             {% include "core/submit/fragment_field.html" with field=form.print_card %}
                             <br>
+                            <p>
+                                If you want us to print the card, please save your changes first and then press
+                                "preview" to see if your texts are too long etc. Please contact us if you have any
+                                issues with this tool!
+                            </p>
                         </div>
                     </div>
                     <div class="center">
@@ -69,6 +82,12 @@
                                 class="waves-effect waves-light orange btn-large btn-block">
                             Save
                         </button>
+                        {% if opening.pk %}
+                        <a href="{% url 'job.preview' %}?code={{ request.GET.code }}" target="_blank"
+                           class="waves-effect waves-light grey btn-large btn-block">
+                            Preview
+                        </a>
+                        {% endif %}
                     </div>
                 </form>
             </div>

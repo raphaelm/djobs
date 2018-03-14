@@ -83,6 +83,7 @@ class SubmitView(TemplateView):
         ctx = super().get_context_data()
         if self.code:
             ctx['form'] = self.form
+            ctx['opening'] = self.opening
         return ctx
 
     def post(self, request, *args, **kwargs):
