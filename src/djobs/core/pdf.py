@@ -91,7 +91,7 @@ class PDFGenerator:
                 height=35 * mm, width=70 * mm,
                 kind='proportional'
             )
-            im._restrictSize(70 * mm, 35 * mm)
+            # im._restrictSize(70 * mm, 35 * mm)
             company_story.append(im)
             company_story.append(Spacer(1 * mm, 3 * mm))
 
