@@ -88,7 +88,8 @@ class PDFGenerator:
         if self.obj.logo:
             im = Image(
                 os.path.join(settings.MEDIA_ROOT, self.obj.logo.name),
-                height=35 * mm
+                height=35 * mm, width=70 * mm,
+                kind='proportional'
             )
             im._restrictSize(70 * mm, 35 * mm)
             company_story.append(im)
