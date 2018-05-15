@@ -1,11 +1,14 @@
+from PyPDF2 import PdfFileMerger
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import ClearableFileInput
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import TemplateView, ListView, DetailView
+from io import BytesIO
 
 from djobs.core.models import AccessCode, JobOpening
 from djobs.core.pdf import PDFGenerator
@@ -148,3 +151,20 @@ class JobListView(ListView):
 
     def get_queryset(self):
         return JobOpening.objects.filter(active=True, public=True).order_by('company_name')
+
+
+class PrintAll(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        jos = JobOpening.objects.filter(active=True, print_card=True)
+        merger = PdfFileMerger()
+        for j in jos:
+            data = PDFGenerator(j).create_pdf()
+            merger.append(BytesIO(data))
+        data = BytesIO()
+        merger.write(data)
+        data.seek(0)
+        resp = HttpResponse(data.read())
+        resp['Content-Type'] = 'application/pdf'
+        resp['Content-Disposition'] = 'inline; filename="preview.pdf"'
+        return resp
