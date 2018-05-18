@@ -17,8 +17,7 @@
                         </span>
                         <p>
                             <strong>{% trans "Location:" %}</strong> {{ job.job_location }}<br>
-                            <strong>{% trans "Remote:" %}</strong> {% if job.job_remote %}{% trans "Yes" %}{% else %}{%
-                            trans "No" %}{% endif %}
+                            <strong>{% trans "Remote:" %}</strong> {% if job.job_remote %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}
                             {% if job.job_salary_range %}
                             <br><strong>{% trans "Salary range:" %}</strong> {{ job.job_salary_range }}
                             {% endif %}
